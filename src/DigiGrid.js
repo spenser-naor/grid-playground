@@ -12,6 +12,7 @@ export default function DigiGrid({ width, height }) {
             myCol.push(i)
         }
         return myCol
+        
     }
 
     return (
