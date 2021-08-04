@@ -4,24 +4,26 @@ export default class Digi extends Component {
     constructor(props){
         super(props);
         this.state = {
-            row: this.props.row,
-            col: this.props.col,
             digiValue: 0,
         }
-        // this.row = 0;
-        // this.col = 0;
-        // this.digiValue = 0;
     }
+
+    // componentDidMount(){
+    //     console.log('mounted '+ this.props.row + ' ' + this.props.col)
+    //     window.addEventListener("click", this.callClick)
+    // }
+
+    // callClick= () => {
+    //     console.log('click called')
+    //     this.props.cluck('test')
+    // }
+
+    // needs to be formatted as an arrow function to force a binding to the class. so weird
     toggle = () => {
+        this.props.click(this)
         const newDigiValue = !this.state.digiValue ? 1 : 0
         this.setState({digiValue:newDigiValue})
-        //this.digiValue = !this.digiValue
-        console.log(this.state.row,this.state.col)
-        // return (
-        //     <div onClick={toggle}>
-        //         {digiValue}
-        //     </div>
-        // )
+        //console.log(this.props.row,this.props.col)
     }
     render() {
         return (

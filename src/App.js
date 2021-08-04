@@ -4,7 +4,7 @@ import DigiGrid from './DigiGrid'
 function App() {
   return (
     <>
-    <DigiGrid width = { '10' } height = { '5' } />
+    <DigiGrid width = { '3' } height = { '3' } />
     </>
   );
 }
