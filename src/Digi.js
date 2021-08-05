@@ -11,8 +11,10 @@ export default class Digi extends Component {
     }
 
     componentDidMount(){
-        console.log('mounted '+ this.props.row + ' ' + this.props.col)
-        window.addEventListener('clicked'+this.props.row+this.props.col, this.callClick)
+        //console.log('mounted '+ this.props.row + ' ' + this.props.col)
+        const digiLocation = 'clickedrow:'+this.props.row+'col:'+this.props.col
+        //console.log(digiLocation)
+        window.addEventListener(digiLocation, this.callClick)
     }
     callClick = (e) => {
         setTimeout(
@@ -20,7 +22,7 @@ export default class Digi extends Component {
                 this.toggle(e.detail)
             }
             .bind(this),
-            10
+            20
         );
     }
 
@@ -41,12 +43,11 @@ export default class Digi extends Component {
             this.setState({digiValue:newDigiValue, clickIds:newClickIds})
 
             const clickArray = [
-                (this.props.row+1)+''+(this.props.col),
-                (this.props.row-1)+''+(this.props.col),
-                (this.props.row)+''+(this.props.col+1),
-                (this.props.row)+''+(this.props.col-1)
+                'row:'+(this.props.row+1)+'col:'+(this.props.col),
+                'row:'+(this.props.row-1)+'col:'+(this.props.col),
+                'row:'+(this.props.row)+'col:'+(this.props.col+1),
+                'row:'+(this.props.row)+'col:'+(this.props.col-1)
             ]
-
             clickArray.map(digiLocation => window.dispatchEvent(new CustomEvent('clicked'+digiLocation,{ detail: newClickId })))
         }
     }
