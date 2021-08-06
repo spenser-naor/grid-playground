@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import './Digi.css'
 
 export default class Digi extends Component {
     constructor(props){
         super(props);
+
         this.state = {
             digiValue: 0,
             clickIds: {},
+            countingDown: false,
         }
     }
 
@@ -22,8 +25,56 @@ export default class Digi extends Component {
                 this.toggle(e.detail)
             }
             .bind(this),
-            20
+            this.props.timeScale
         );
+    }
+
+    countDown = (countValue) => {
+        let count = countValue
+        //for (let count = countValue; count > 0; count--) {
+        //while (count >= 0){
+        if (count === 0){
+            setTimeout(
+                function() {
+                    //const newDigiValue = countValue
+                    //const counting = true
+                    this.setState({digiValue:count, countDown: false})
+                }
+                .bind(this),
+                this.props.timeScale*10
+            );
+        }
+
+        else{
+
+            setTimeout(
+                function() {
+                    //const newDigiValue = countValue
+                    //const counting = true
+                    count--
+                    this.setState({digiValue:count, countDown: true})
+                    this.countDown(count)
+                }
+                .bind(this),
+                this.props.timeScale*10
+            );
+        }
+        // while (count > 0){
+        //     setTimeout(
+        //         function() {
+        //             const newDigiValue = this.state.digiValue - 1
+        //             const counting = true
+        //             this.setState({digiValue:newDigiValue, countDown: counting})
+        //         }
+        //         .bind(this),
+        //         20
+        //     );
+        // }
+        // const newerDigiValue = 0
+        // const alsoCounting = false
+        // this.setState({digiValue:newerDigiValue, countDown: alsoCounting})
+        
+    //}
     }
 
     newClick = () => {
@@ -35,7 +86,9 @@ export default class Digi extends Component {
     toggle = (newClickId) => {
         if (!this.state.clickIds[newClickId]){
 
-            const newDigiValue = !this.state.digiValue ? 1 : 0
+            //const newDigiValue = !this.state.digiValue ? 1 : 0 //simple toggle
+
+            const newDigiValue = this.state.digiValue + 1
 
             var newClickIds = this.state.clickIds
             newClickIds[newClickId] = 1
@@ -49,11 +102,19 @@ export default class Digi extends Component {
                 'row:'+(this.props.row)+'col:'+(this.props.col-1)
             ]
             clickArray.map(digiLocation => window.dispatchEvent(new CustomEvent('clicked'+digiLocation,{ detail: newClickId })))
+            
+            if (this.state.countingDown === false){
+                //console.log('countdown')
+                const counting = true
+                this.setState({countDown: counting})
+                this.countDown(newDigiValue)
+            }
+        
         }
     }
     render() {
         return (
-            <div onClick={this.newClick}>
+            <div onClick={this.newClick} className={this.props.colors[this.state.digiValue]}>
                 {this.state.digiValue}
             </div>
         )

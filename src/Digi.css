@@ -1,0 +1,15 @@
+.stage5 {
+    color: rgb(255, 255, 5);
+}
+.stage4 {
+    color: rgb(250, 200, 0);
+}
+.stage3 {
+    color: rgba(0, 200, 250);
+}
+.stage2 {
+    color: rgb(250, 0, 250);
+}
+.stage1 {
+    color: rgb(50, 50, 50);
+}
