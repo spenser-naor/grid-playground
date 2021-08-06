@@ -16,7 +16,6 @@ export default class Digi extends Component {
     componentDidMount(){
         //console.log('mounted '+ this.props.row + ' ' + this.props.col)
         const digiLocation = 'clickedrow:'+this.props.row+'col:'+this.props.col
-        //console.log(digiLocation)
         window.addEventListener(digiLocation, this.callClick)
     }
     callClick = (e) => {
@@ -31,13 +30,9 @@ export default class Digi extends Component {
 
     countDown = (countValue) => {
         let count = countValue
-        //for (let count = countValue; count > 0; count--) {
-        //while (count >= 0){
         if (count === 0){
             setTimeout(
                 function() {
-                    //const newDigiValue = countValue
-                    //const counting = true
                     this.setState({digiValue:count, countDown: false})
                 }
                 .bind(this),
@@ -46,35 +41,18 @@ export default class Digi extends Component {
         }
 
         else{
-
             setTimeout(
                 function() {
-                    //const newDigiValue = countValue
-                    //const counting = true
                     count--
                     this.setState({digiValue:count, countDown: true})
-                    this.countDown(count)
+                    // unfortunately I had to code this recursively to get it to work
+                    // and iterative approach utilizing "while" just locks up the program
+                    this.countDown(count) 
                 }
                 .bind(this),
                 this.props.timeScale*10
             );
         }
-        // while (count > 0){
-        //     setTimeout(
-        //         function() {
-        //             const newDigiValue = this.state.digiValue - 1
-        //             const counting = true
-        //             this.setState({digiValue:newDigiValue, countDown: counting})
-        //         }
-        //         .bind(this),
-        //         20
-        //     );
-        // }
-        // const newerDigiValue = 0
-        // const alsoCounting = false
-        // this.setState({digiValue:newerDigiValue, countDown: alsoCounting})
-        
-    //}
     }
 
     newClick = () => {
@@ -85,9 +63,6 @@ export default class Digi extends Component {
     // needs to be formatted as an arrow function to force a binding to the class. so weird
     toggle = (newClickId) => {
         if (!this.state.clickIds[newClickId]){
-
-            //const newDigiValue = !this.state.digiValue ? 1 : 0 //simple toggle
-
             const newDigiValue = this.state.digiValue + 1
 
             var newClickIds = this.state.clickIds
