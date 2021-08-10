@@ -7,10 +7,6 @@ function App() {
   const waveSliderRef = useRef()
   const speedSliderRef = useRef()
 
-  var testVar = 0;
-
-  var settings = [testVar]
-
   function asciiClick(){
     window.dispatchEvent(new CustomEvent('characterMode', {detail: 'ascii'}))
   }

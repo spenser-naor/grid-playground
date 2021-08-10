@@ -41,7 +41,7 @@ export default class Digi extends Component {
 
     toggleCharacterMode = (e) =>{
         const newCharacters = this.characterWays[e.detail]
-        var newStyle = {color: this.state.colors[this.state.digiValue], backgroundColor: "transparent"}
+        let newStyle = {color: this.state.colors[this.state.digiValue], backgroundColor: "transparent"}
         const newMode = e.detail
 
         if (e.detail === 'grid'){
@@ -56,7 +56,7 @@ export default class Digi extends Component {
         const newColors = this.colorWays[e.detail]
         const newMode = e.detail
 
-        var newStyle = {color: newColors[this.state.digiValue]}
+        let newStyle = {color: newColors[this.state.digiValue]}
 
         if (this.state.characterMode === 'grid'){
             newStyle['backgroundColor'] = newColors[this.state.digiValue]
@@ -93,7 +93,7 @@ export default class Digi extends Component {
     // needs to be formatted as an arrow function to force a binding to the class. so weird
     toggleUp = (newClickId) => {
         if (!this.state.clickIds[newClickId]){
-            var newDigiValue = this.state.digiValue
+            let newDigiValue = this.state.digiValue
 
             if (newClickId[0] === '-'){
                 newDigiValue--
@@ -102,15 +102,18 @@ export default class Digi extends Component {
                 newDigiValue++
             }
 
-            var newClickIds = this.state.clickIds
+            let newClickIds = this.state.clickIds
             newClickIds[newClickId] = 1
 
             // I want to cap the value at 9 here. 10 make sthe grid unstable 
             if (newDigiValue > 9){
                 newDigiValue = 9
             }
+            if (newDigiValue < 0){
+                newDigiValue = 0
+            }
 
-            var newStyle = {color: this.state.colors[newDigiValue]}
+            let newStyle = {color: this.state.colors[newDigiValue]}
 
             if (this.state.characterMode === 'grid'){
                 newStyle['backgroundColor'] = this.state.colors[newDigiValue]
