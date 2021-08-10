@@ -8,3 +8,7 @@ This is a tiny web-app produced while fuzing around with React.
 -Click multiple times to make the waves larger. 
 
 -Change the modes by clicking the buttons or sliding the sliders.
+
+
+You can see the app in action here:
+https://spenser-naor.github.io/grid-build/
