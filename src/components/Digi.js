@@ -6,16 +6,28 @@ export default class Digi extends Component {
     constructor(props){
         super(props);
 
+        this.colorWays = {
+            rainbow: ['rgb(0,0,250)','rgb(75,0,250)','rgb(150,0,250)','rgb(250,0,250)','rgb(250,0,0)','rgb(250,150,0)','rgb(250,250,0)','rgb(0,250,0)','rgb(0,250,250)','rgb(250,250,250)'],
+            heatmap: ['rgb(50,50,150)','rgb(75,125,190)','rgb(150,200,225)','rgb(250,0,250)','rgb(255,255,200)','rgb(250,200,125)','rgb(250,150,100)','rgb(225,75,50)','rgb(150,0,50)','rgb(150,0,50)'],
+            grayscale: ['rgb(0,0,0)','rgb(32,32,32)','rgb(64,64,64)','rgb(96,96,96)','rgb(128,128,128)','rgb(160,160,160)','rgb(192,192,192)','rgb(224,224,224)','rgb(255,255,255)','rgb(255,255,255)'],
+        }
+
+        this.characterWays = {
+            numbers: ['0','1','2','3','4','5','6','7','8','9'],
+            ascii: ['.',',','o','*','%','#','@','{*}','{#}','{@}'],
+            grid: ['0','0','0','0','0','0','0','0','0','0']
+        }
+
         this.state = {
             digiValue: 0,
             clickIds: {},
             countingDown: false,
             characterMode: 'ascii',
             colorMode: 'rainbow',
-            // The react documentation suggests only pulling fro 'this.props' and 'this.state' in the render method
+            // The react documentation suggests only pulling from 'this.props' and 'this.state' in the render method
             // so it seems that storing this list here rather than as a class variable is advisable.
             characters: ['.',',','o','*','%','#','@','{*}','{#}','{@}'],
-            colors: ['rgb(0,0,250)','rgb(75,0,250)','rgb(150,0,250)','rgb(250,0,250)','rgb(250,0,0)','rgb(250,150,0)','rgb(250,250,0)','rgb(0,250,0)','rgb(0,250,250)','rgb(250,250,250)'],
+            colors: this.colorWays['rainbow'],
             textStyle: {color: "black", backgroundColor:"transparent"},
             scale: ['10%','20%','30%','40%','50%','60%','70%','80%','90%','100%','100%']
         }
@@ -28,29 +40,21 @@ export default class Digi extends Component {
     }
 
     toggleCharacterMode = (e) =>{
-        var newCharacters = ['0','1','2','3','4','5','6','7','8','9']
-        var newGridStyle = {color: "black", backgroundColor: "transparent"}
+        const newCharacters = this.characterWays[e.detail]
+        var newStyle = {color: this.state.colors[this.state.digiValue], backgroundColor: "transparent"}
         const newMode = e.detail
-        if (e.detail === 'ascii'){
-            newCharacters = ['.',',','o','*','%','#','@','{*}','{#}','{@}']
-        }
+
         if (e.detail === 'grid'){
-            newGridStyle = {color: this.state.colors[this.state.digiValue],
-                            backgroundColor: this.state.colors[this.state.digiValue],
-                            transform: 'scale('+this.state.scale[this.state.digiValue]+', '+this.state.scale[this.state.digiValue]}
+            newStyle['backgroundColor'] = this.state.colors[this.state.digiValue]
+            newStyle['transform'] = 'scale('+this.state.scale[this.state.digiValue]+', '+this.state.scale[this.state.digiValue]
         }
-        this.setState({characters:newCharacters, textStyle: newGridStyle, characterMode: newMode})
+
+        this.setState({characters:newCharacters, textStyle: newStyle, characterMode: newMode})
     }
 
     toggleColorMode = (e) =>{
-        var newColors = ['rgb(0,0,250)','rgb(75,0,250)','rgb(150,0,250)','rgb(250,0,250)','rgb(250,0,0)','rgb(250,150,0)','rgb(250,250,0)','rgb(0,250,0)','rgb(0,250,250)','rgb(250,250,250)']
+        const newColors = this.colorWays[e.detail]
         const newMode = e.detail
-        if (e.detail === 'heatmap'){
-            newColors = ['rgb(50,50,150)','rgb(75,125,190)','rgb(150,200,225)','rgb(250,0,250)','rgb(255,255,200)','rgb(250,200,125)','rgb(250,150,100)','rgb(225,75,50)','rgb(150,0,50)','rgb(150,0,50)']
-        }
-        if (e.detail === 'grayscale'){
-            newColors = ['rgb(0,0,0)','rgb(32,32,32)','rgb(64,64,64)','rgb(96,96,96)','rgb(128,128,128)','rgb(160,160,160)','rgb(192,192,192)','rgb(224,224,224)','rgb(255,255,255)','rgb(255,255,255)']
-        }
 
         var newStyle = {color: newColors[this.state.digiValue]}
 
