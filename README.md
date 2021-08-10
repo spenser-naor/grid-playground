@@ -11,4 +11,4 @@ This is a tiny web-app produced while fuzing around with React.
 
 
 You can see the app in action here:
-https://spenser-naor.github.io/grid-build/
+https://spenser-naor.github.io/Wavilicious/
