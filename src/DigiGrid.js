@@ -7,7 +7,7 @@ export default function DigiGrid({ width, height, length, speed, settings }) {
 
     function createMyCols(){
         const myCol = []
-        for( var i=0; i < height; i++ ){
+        for( var i = 0; i < height; i++ ){
             myCol.push(i)
         }
         return myCol
@@ -15,7 +15,7 @@ export default function DigiGrid({ width, height, length, speed, settings }) {
 
     function createMyRow(){
         const myRow = []
-        for( var i=0; i < width; i++ ){
+        for( var i = 0; i < width; i++ ){
             myRow.push(i)
         }
         return myRow
@@ -24,17 +24,17 @@ export default function DigiGrid({ width, height, length, speed, settings }) {
     return (
         createMyCols().map(myCol => {
             return (
-            <div key={uuidv4()} className="flexbox-container">
+            <div key = { uuidv4() } className = "flexbox-container">
                 {createMyRow().map(myDigi => {
                     return (
                         <Digi 
-                        key={uuidv4()} 
-                        row = {myDigi} 
-                        col ={myCol} 
-                        timeScale = {200} 
-                        length = {length}
-                        speed = {speed}
-                        settings = {settings}
+                        key = { uuidv4() } 
+                        row = { myDigi } 
+                        col ={ myCol } 
+                        timeScale = { 200 } 
+                        length = { length }
+                        speed = { speed }
+                        settings = { settings }
                         />
                     )
                 })
