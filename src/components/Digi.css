@@ -3,6 +3,7 @@
     height: 18px;
     width: 18px;
     text-align: center;
+    user-select: none;
 }
 
 .gridTile {

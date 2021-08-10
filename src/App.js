@@ -57,7 +57,7 @@ function App() {
       height = { '20' } 
       length = { waveSliderRef } 
       speed = { speedSliderRef } 
-      settings = { settings } />
+      />
 
       <br></br>
       <div className = "buttonGrid">

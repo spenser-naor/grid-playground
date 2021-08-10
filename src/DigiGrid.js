@@ -3,7 +3,7 @@ import './DigiGrid.css'
 import Digi from './components/Digi'
 import { v4 as uuidv4 } from 'uuid';
 
-export default function DigiGrid({ width, height, length, speed, settings }) {
+export default function DigiGrid({ width, height, length, speed }) {
 
     function createMyCols(){
         const myCol = []
@@ -34,7 +34,6 @@ export default function DigiGrid({ width, height, length, speed, settings }) {
                         timeScale = { 200 } 
                         length = { length }
                         speed = { speed }
-                        settings = { settings }
                         />
                     )
                 })
