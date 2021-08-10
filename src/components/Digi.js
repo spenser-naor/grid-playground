@@ -22,15 +22,12 @@ export default class Digi extends Component {
     }
 
     componentDidMount(){
-        //console.log('mounted '+ this.props.row + ' ' + this.props.col)
-        //const digiLocation = 'clickedrow:'+this.props.row+'col:'+this.props.col
         window.addEventListener('clickedrow:'+this.props.row+'col:'+this.props.col, this.callClick)
-        window.addEventListener('unClickedrow:'+this.props.row+'col:'+this.props.col, this.callUnClick)
-        window.addEventListener('characterMode', this.characterMode)
-        window.addEventListener('colorMode', this.colorMode)
+        window.addEventListener('characterMode', this.toggleCharacterMode)
+        window.addEventListener('colorMode', this.toggleColorMode)
     }
 
-    characterMode = (e) =>{
+    toggleCharacterMode = (e) =>{
         var newCharacters = ['0','1','2','3','4','5','6','7','8','9']
         var newGridStyle = {color: "black", backgroundColor: "transparent"}
         const newMode = e.detail
@@ -45,7 +42,7 @@ export default class Digi extends Component {
         this.setState({characters:newCharacters, textStyle: newGridStyle, characterMode: newMode})
     }
 
-    colorMode = (e) =>{
+    toggleColorMode = (e) =>{
         var newColors = ['rgb(0,0,250)','rgb(75,0,250)','rgb(150,0,250)','rgb(250,0,250)','rgb(250,0,0)','rgb(250,150,0)','rgb(250,250,0)','rgb(0,250,0)','rgb(0,250,250)','rgb(250,250,250)']
         const newMode = e.detail
         if (e.detail === 'heatmap'){
@@ -62,10 +59,22 @@ export default class Digi extends Component {
             newStyle['transform'] = 'scale('+this.state.scale[this.state.digiValue]+', '+this.state.scale[this.state.digiValue]
         }
 
-
         this.setState({colors:newColors, colorMode: newMode, textStyle: newStyle})
     }
 
+    newClick = () => {
+        const newClickId = uuidv4()
+        this.toggleUp(newClickId)
+
+        setTimeout(
+            function() {
+                const newUnClickId = '-'+uuidv4()
+                this.toggleUp(newUnClickId)
+            }
+        .bind(this),
+        (this.props.timeScale / this.props.speed.current.value) * this.props.length.current.value
+    );
+    }
 
     callClick = (e) => {
         setTimeout(
@@ -77,63 +86,17 @@ export default class Digi extends Component {
         );
     }
 
-    callUnClick = (e) => {
-        setTimeout(
-            function() {
-                this.toggleDown(e.detail)
-            }
-            .bind(this),
-            this.props.timeScale / this.props.speed.current.value
-        );
-    }
-
-    // RETAIN FOR SECONDARY MODE
-    // countDown = (countValue) => {
-
-    //     this.setState({digiValue:countValue})
-
-    //     if (this.props.row === 10 && this.props.col === 10){
-    //         console.log(countValue)
-    //     }
-
-    //     let count = countValue
-    //     if (count === 0){
-    //         this.setState({countDown: false})
-    //     }
-
-    //     else{
-    //         setTimeout(
-    //             function() {
-    //                 count--
-    //                 this.setState({digiValue:count})
-    //                 // unfortunately I had to code this recursively to get it to work
-    //                 // and iterative approach utilizing "while" just locks up the program
-    //                 this.countDown(count) 
-    //             }
-    //             .bind(this),
-    //             this.props.timeScale*10
-    //         );
-    //     }
-    // }
-
-    newClick = () => {
-        const newClickId = uuidv4()
-        this.toggleUp(newClickId)
-
-        setTimeout(
-            function() {
-                const newUnClickId = uuidv4()
-                this.toggleDown(newUnClickId)
-            }
-        .bind(this),
-        (this.props.timeScale / this.props.speed.current.value) * this.props.length.current.value
-    );
-    }
-
     // needs to be formatted as an arrow function to force a binding to the class. so weird
     toggleUp = (newClickId) => {
         if (!this.state.clickIds[newClickId]){
-            var newDigiValue = this.state.digiValue + 1
+            var newDigiValue = this.state.digiValue
+
+            if (newClickId[0] === '-'){
+                newDigiValue--
+            }
+            else{
+                newDigiValue++
+            }
 
             var newClickIds = this.state.clickIds
             newClickIds[newClickId] = 1
@@ -160,55 +123,14 @@ export default class Digi extends Component {
             ]
             clickArray.map(digiLocation => window.dispatchEvent(new CustomEvent('clicked'+digiLocation,{ detail: newClickId })))
             
-
-            // RETAIN FOR SECONDARY MODE
-            // if (this.state.countingDown === false){
-            //     //console.log('countdown')
-            //     const counting = true
-            //     this.setState({countDown: counting})
-            //     this.countDown(newDigiValue)
-            // }
-    
         }
     }
-
-    toggleDown = (newUnClickId) => {
-        if (!this.state.clickIds[newUnClickId]){
-            var newDigiValue = this.state.digiValue - 1
-
-            var newUnClickIds = this.state.clickIds
-            newUnClickIds[newUnClickId] = 1
-
-            if (newDigiValue < 0){
-                newDigiValue = 0
-            }
-
-            var newStyle = {color: this.state.colors[newDigiValue]}
-
-            if (this.state.characterMode === 'grid'){
-                newStyle['backgroundColor'] = this.state.colors[newDigiValue]
-                newStyle['transform'] = 'scale('+this.state.scale[newDigiValue]+', '+this.state.scale[newDigiValue]
-            }
-
-            this.setState({digiValue:newDigiValue, clickIds:newUnClickIds, textStyle: newStyle})
-
-            const clickArray = [
-                'row:'+(this.props.row+1)+'col:'+(this.props.col),
-                'row:'+(this.props.row-1)+'col:'+(this.props.col),
-                'row:'+(this.props.row)+'col:'+(this.props.col+1),
-                'row:'+(this.props.row)+'col:'+(this.props.col-1)
-            ]
-            clickArray.map(digiLocation => window.dispatchEvent(new CustomEvent('unClicked'+digiLocation,{ detail: newUnClickId })))
-
-        }
-    }
-
 
     render() {
         return (
-            <div onClick={this.newClick}
-            className="numbers" >
-                <div className='gridTile' style={this.state.textStyle} >
+            <div onClick = { this.newClick }
+            className = "numbers" >
+                <div className = 'gridTile' style = { this.state.textStyle } >
                 <div>
                 {this.state.characters[this.state.digiValue]}
                 </div>

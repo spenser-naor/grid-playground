@@ -21,7 +21,15 @@ export default class Slider extends Component {
             <label>
             {this.props.label}{this.state.sliderValue}
             <br></br>
-            <input type="range" min={this.props.min} max={this.props.max} defaultValue = {this.props.default} onChange={this.setValue} className="slider" ref = {this.props.sliderRef} />
+            <input 
+            type = "range" 
+            min = { this.props.min } 
+            max = { this.props.max } 
+            defaultValue = { this.props.default } 
+            onChange = { this.setValue } 
+            className = "slider" 
+            ref = {this.props.sliderRef} 
+            />
             </label>
             </div>
         )
