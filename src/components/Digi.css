@@ -1,0 +1,13 @@
+.numbers {
+    color: rgb(0,0,0);
+    height: 18px;
+    width: 18px;
+    text-align: center;
+}
+
+.gridTile {
+    border-radius: 10%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+}

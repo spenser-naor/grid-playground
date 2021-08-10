@@ -1,12 +1,9 @@
 import React from 'react'
 import './DigiGrid.css'
-import Digi from './Digi'
+import Digi from './components/Digi'
 import { v4 as uuidv4 } from 'uuid';
 
-export default function DigiGrid({ width, height }) {
-
-    const displayCharacters = ['=','*','#','$','@']
-    const displayColors = ['stage1','stage2','stage3','stage4','stage5']
+export default function DigiGrid({ width, height, length, speed, settings }) {
 
     function createMyCols(){
         const myCol = []
@@ -34,9 +31,10 @@ export default function DigiGrid({ width, height }) {
                         key={uuidv4()} 
                         row = {myDigi} 
                         col ={myCol} 
-                        timeScale = {100} 
-                        chars = {displayCharacters}
-                        colors = {displayColors}
+                        timeScale = {200} 
+                        length = {length}
+                        speed = {speed}
+                        settings = {settings}
                         />
                     )
                 })

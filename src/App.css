@@ -1,3 +1,79 @@
-.grid {
-    letter-spacing: .1rem;
+body {
+    /*background-image: url('./media/smallPawForCatKind_tm.png');*/
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: -50%;
 }
+
+.themeLabel{
+    text-align: center;
+}
+
+.buttonGrid{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.buttonCharacters{
+    border-radius: 5px;
+    border-style: solid;
+    background-color: none;
+    border-color: gray;
+    height: 30px;
+}
+
+.buttonCharacters:hover{
+    background-color: black;
+    color:white;
+}
+
+.buttonColors{
+    border-radius: 5px;
+    border-style: solid;
+    background-color: lightseagreen;
+    border-color: gray;
+    height: 30px;
+    color: white;
+}
+
+.buttonColors:hover{
+    background-color: buttonface;
+    color: buttontext;
+}
+
+
+.spacer{
+    width: 20px;
+}
+
+.buttons{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    transform: translate(20%, 0%);
+}
+
+.grid {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /*backdrop-filter: blur(10px);*/
+  }
+
+.right {
+    position: absolute;
+    top: 0% ;
+    width: 100%;
+    transform: translate(25%, 0%);
+    text-align: center;
+}
+
+.left {
+    text-align: center;
+    transform: translate(-25%, 0%);
+}
+
+
