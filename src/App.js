@@ -30,6 +30,10 @@ function App() {
     window.dispatchEvent(new CustomEvent('colorMode', {detail: 'rainbow'}))
   }
 
+  function openGit(){
+    window.open('https://github.com/spenser-naor/grid-playground');
+  }
+
   return (
     <>
     <div className = "grid">
@@ -63,7 +67,7 @@ function App() {
       <div className = "buttonGrid">
 
       <div className = "buttons">
-      <button className ="buttonCharacters" onClick = { asciiClick }>Ascii</button>
+      <button className = "buttonCharacters" onClick = { asciiClick }>Ascii</button>
       <div style = {{height: "5px"}}></div>
       <button className = "buttonCharacters" onClick = { numberClick }>Numbers</button>
       <div style = {{height: "5px"}}></div>
@@ -79,8 +83,12 @@ function App() {
       <div style = {{height: "5px"}}></div>
       <button className = "buttonColors" onClick = { grayscaleClick }>Grayscale</button>
       </div>
-      
       </div>
+
+      <br></br>
+      
+      <button className = "buttonGit" onClick = { openGit } >GitHub Repo</button>
+
     </div>
     </>
   );

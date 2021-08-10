@@ -5,14 +5,28 @@ body {
     background-position-y: -50%;
 }
 
-.themeLabel{
-    text-align: center;
-}
-
 .buttonGrid{
     display: flex;
     flex-direction: row;
     width: 100%;
+}
+
+.buttonGit {
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    background-color: white;
+    border-color: gray;
+    height: 20px;
+
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.buttonGit:hover{
+    background-color: black;
+    color:white;
 }
 
 .buttonCharacters{
@@ -24,7 +38,7 @@ body {
 }
 
 .buttonCharacters:hover{
-    background-color: black;
+    background-color: darkgrey;
     color:white;
 }
 
