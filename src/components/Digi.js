@@ -90,7 +90,6 @@ export default class Digi extends Component {
         );
     }
 
-    // needs to be formatted as an arrow function to force a binding to the class. so weird
     toggleUp = (newClickId) => {
         if (!this.state.clickIds[newClickId]){
             let newDigiValue = this.state.digiValue
