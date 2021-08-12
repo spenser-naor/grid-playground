@@ -10,7 +10,7 @@ export default class Slider extends Component {
         }
     }
 
-    setValue = () => {
+    setValue() {
         const newValue = this.props.sliderRef.current.value
         this.setState({sliderValue:newValue})
     }
@@ -26,7 +26,7 @@ export default class Slider extends Component {
             min = { this.props.min } 
             max = { this.props.max } 
             defaultValue = { this.props.default } 
-            onChange = { this.setValue } 
+            onChange = { this.setValue.bind(this) } 
             className = "slider" 
             ref = {this.props.sliderRef} 
             />

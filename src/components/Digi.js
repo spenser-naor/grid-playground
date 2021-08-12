@@ -6,6 +6,8 @@ export default class Digi extends Component {
     constructor(props){
         super(props);
 
+        this.toggleUp.bind(this)
+
         this.colorWays = {
             rainbow: ['rgb(0,0,250)','rgb(75,0,250)','rgb(150,0,250)','rgb(250,0,250)','rgb(250,0,0)','rgb(250,150,0)','rgb(250,250,0)','rgb(0,250,0)','rgb(0,250,250)','rgb(250,250,250)'],
             heatmap: ['rgb(50,50,150)','rgb(75,125,190)','rgb(150,200,225)','rgb(250,0,250)','rgb(255,255,200)','rgb(250,200,125)','rgb(250,150,100)','rgb(225,75,50)','rgb(150,0,50)','rgb(150,0,50)'],
@@ -33,13 +35,13 @@ export default class Digi extends Component {
         }
     }
 
-    componentDidMount(){
-        window.addEventListener('clickedrow:'+this.props.row+'col:'+this.props.col, this.callClick)
-        window.addEventListener('characterMode', this.toggleCharacterMode)
-        window.addEventListener('colorMode', this.toggleColorMode)
+    componentDidMount() {
+        window.addEventListener('clickedrow:'+this.props.row+'col:'+this.props.col, this.callClick.bind(this))
+        window.addEventListener('characterMode', this.toggleCharacterMode.bind(this))
+        window.addEventListener('colorMode', this.toggleColorMode.bind(this))
     }
 
-    toggleCharacterMode = (e) =>{
+    toggleCharacterMode(e) {
         const newCharacters = this.characterWays[e.detail]
         let newStyle = {color: this.state.colors[this.state.digiValue], backgroundColor: "transparent"}
         const newMode = e.detail
@@ -52,7 +54,7 @@ export default class Digi extends Component {
         this.setState({characters:newCharacters, textStyle: newStyle, characterMode: newMode})
     }
 
-    toggleColorMode = (e) =>{
+    toggleColorMode(e) {
         const newColors = this.colorWays[e.detail]
         const newMode = e.detail
 
@@ -66,7 +68,17 @@ export default class Digi extends Component {
         this.setState({colors:newColors, colorMode: newMode, textStyle: newStyle})
     }
 
-    newClick = () => {
+    callClick(e) {
+        setTimeout(
+            function() {
+                this.toggleUp(e.detail)
+            }
+            .bind(this),
+            this.props.timeScale / this.props.speed.current.value
+        );
+    }
+
+    newClick() {
         const newClickId = uuidv4()
         this.toggleUp(newClickId)
 
@@ -80,17 +92,7 @@ export default class Digi extends Component {
     );
     }
 
-    callClick = (e) => {
-        setTimeout(
-            function() {
-                this.toggleUp(e.detail)
-            }
-            .bind(this),
-            this.props.timeScale / this.props.speed.current.value
-        );
-    }
-
-    toggleUp = (newClickId) => {
+    toggleUp(newClickId) {
         if (!this.state.clickIds[newClickId]){
             let newDigiValue = this.state.digiValue
 
@@ -104,7 +106,7 @@ export default class Digi extends Component {
             let newClickIds = this.state.clickIds
             newClickIds[newClickId] = 1
 
-            // I want to cap the value at 9 here. 10 make sthe grid unstable 
+            // I want to cap the value at 9 here. 10 makes the grid unstable 
             if (newDigiValue > 9){
                 newDigiValue = 9
             }
@@ -134,7 +136,7 @@ export default class Digi extends Component {
 
     render() {
         return (
-            <div onClick = { this.newClick }
+            <div onClick = { this.newClick.bind(this) }
             className = "numbers" >
                 <div className = 'gridTile' style = { this.state.textStyle } >
                 <div>
